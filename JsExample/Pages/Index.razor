@@ -1,0 +1,17 @@
+@page "/"
+@inject IJSRuntime jsRuntime
+<h1>Your name is @Name</h1>
+
+<p>@State</p>
+<input type="text" bind="@Name" />
+<button class="btn btn-primary" onclick="@ShowWhatIKnow">Use JS</button>
+
+@functions {
+    string Name = "Keril";
+    MarkupString State = new MarkupString("I know all!");
+    private async Task ShowWhatIKnow()
+    {
+        var res = await jsRuntime.InvokeAsync<string>("ShowWhatIKnow", Name);
+        State = new MarkupString(res);
+    }
+}
